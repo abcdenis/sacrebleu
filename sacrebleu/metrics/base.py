@@ -220,7 +220,7 @@ class Metric(metaclass=ABCMeta):
             err_msg = 'The argument `hyp` should be a string.'
         elif isinstance(refs, str) or not isinstance(refs, Sequence):
             err_msg = 'The argument `refs` should be a sequence of strings.'
-        elif not isinstance(refs[0], str):
+        elif not all(isinstance(x, str) for x in refs):
             err_msg = 'Each element of `refs` should be a string.'
 
         if err_msg:
@@ -251,7 +251,7 @@ class Metric(metaclass=ABCMeta):
                 err_msg = "`refs` should be a sequence of sequence of strings."
             elif not isinstance(refs[0], Sequence):
                 err_msg = "Each element of `refs` should be a sequence of strings."
-            elif not isinstance(refs[0][0], str):
+            elif not all(isinstance(ref, str) or all(isinstance(x, str) for x in ref) for ref in refs):
                 err_msg = "`refs` should be a sequence of sequence of strings."
 
         if err_msg:
